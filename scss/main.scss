@@ -379,6 +379,7 @@ input.button.edit {
 	z-index: 1;
 	overflow: hidden;
 	padding-top: 4.8em;
+	background-size: 42px;
 	background-color: $color_opposite;
 	background-image: -webkit-repeating-linear-gradient(45deg, transparent, transparent 15px, darken($color_opposite, 2%) 15px, darken($color_opposite, 2%) 30px);
 	background-image: -moz-repeating-linear-gradient(45deg, transparent, transparent 15px, darken($color_opposite, 2%) 15px, darken($color_opposite, 2%) 30px);
