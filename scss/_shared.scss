@@ -1,0 +1,30 @@
+/*=====================
+ * Variables
+ *=====================*/
+/* Colors */
+$color_content: #222;
+$color_accent: #26527c;
+$color_opposite: #fff;
+$color_light: #5b8dbe;
+
+/* Fonts */
+$font_content: 'Open Sans', Arial, sans-serif;
+$font_mono: 'Droid Sans Mono', monospace, serif;
+
+/*=====================
+ * Mixins
+ *=====================*/
+@mixin box-shadow($val) {
+	-webkit-box-shadow: $val;
+	box-shadow: $val;
+}
+@mixin border-radius($rad) {
+	-webkit-border-radius: $rad;
+	border-radius: $rad;
+}
+@mixin transition($val) {
+	-webkit-transition: $val;
+	-moz-transition: $val;
+	-o-transition: $val;
+	transition: $val;
+}
