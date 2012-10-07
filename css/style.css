@@ -554,9 +554,14 @@ input.button.edit:hover:after {
   text-indent: -9999px;
 }
 
-#page-nav ul {
-  overflow: auto;
+#page-nav {
+  overflow: scroll;
   max-height: 100%;
+}
+@media screen and (max-height: 480px) and (orientation: landscape) {
+  #page-nav {
+    max-height: 65%;
+  }
 }
 #page-nav li {
   margin-bottom: .5em;

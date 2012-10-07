@@ -258,9 +258,13 @@ input.button.edit {
 	text-indent: -9999px;
 }
 #page-nav {
-	ul {
-		overflow: auto;
-		max-height: 100%;
+	overflow: scroll;
+	max-height: 100%;
+
+	@media screen and (max-height: 480px) and (orientation: landscape){
+		& {
+			max-height: 65%;
+		}
 	}
 
 	li {
