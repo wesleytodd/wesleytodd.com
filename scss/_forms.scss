@@ -47,6 +47,45 @@ textarea {
 	resize: vertical;
 }
 
+.input-wrap {
+	clear: both;
+	margin: 0 auto .5em;
+
+	label {
+		display: block;
+		width: 100%;
+	}
+	input,
+	textarea {
+		width: 100%;
+	}
+	textarea {
+		min-height: 8em;
+	}
+
+	@media screen and (min-width: 420px){
+		&.width-half {
+			clear: none;
+			width: 48%;
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+	@media screen and (min-width: 630px){
+		&.width-half {
+			&.left {
+				float: left;
+				margin-right: 2%;
+			}
+			&.right {
+				float: right;
+				margin-left: 2%;
+			}
+		}
+	}
+}
+
+/* Search Input */
 .search label {
 	padding-left: 1.2em;
 	position: relative;
@@ -77,5 +116,3 @@ textarea {
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
-
-

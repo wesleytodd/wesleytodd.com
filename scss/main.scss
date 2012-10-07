@@ -373,6 +373,7 @@ input.button.edit {
 #page-content {
 	position: relative;
 	z-index: 1;
+	overflow: hidden;
 	padding-top: 4.8em;
 	background-color: $color_opposite;
 	background-image: -webkit-repeating-linear-gradient(45deg, transparent, transparent 15px, darken($color_opposite, 2%) 15px, darken($color_opposite, 2%) 30px);
@@ -486,7 +487,7 @@ input.button.edit {
 		}
 		&.right {
 			float: right;
-			margin: 0 3% 1.5% 0;
+			margin: 0 0 1.5% 3%;
 		}
 		& + .content {
 			width: 52%;
@@ -505,6 +506,15 @@ input.button.edit {
 		}
 		& + .content {
 			width: 66%;
+		}
+
+		&.large {
+			width: 50%;
+			max-width: 600px;
+
+			& + .content {
+				width: 46%;
+			}
 		}
 	}
 	
@@ -541,6 +551,14 @@ input.button.edit {
 /*=====================
  * Section Specific Styles
  *=====================*/
+#projects {
+	.project-item {
+		overflow: hidden;
+		padding: 1.5em 0;
+		border-bottom: 1px dotted lighten($color_content, 50%);
+	}
+}
+
 #resume {
 	.resume-item {
 		overflow: hidden;
