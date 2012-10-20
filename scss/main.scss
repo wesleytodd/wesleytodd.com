@@ -258,7 +258,7 @@ input.button.edit {
 	text-indent: -9999px;
 }
 #page-nav {
-	overflow: scroll;
+	overflow: auto;
 	max-height: 100%;
 
 	@media screen and (max-height: 480px) and (orientation: landscape){
@@ -417,8 +417,8 @@ input.button.edit {
 
 /* Content Section */
 .section {
-	overflow: hidden;
 	margin: 2em;
+	@extend .clearfix;
 
 	.section-header {
 		margin-bottom: 1em;
@@ -434,7 +434,7 @@ input.button.edit {
 	}
 	@media screen and (min-width: 975px){
 		.section-content {
-			overflow: hidden;
+			@extend .clearfix;
 		}
 	}
 }
@@ -475,6 +475,7 @@ input.button.edit {
 	padding: 1em;
 	margin: 0 auto 1em;
 	max-width: 300px;
+	@include box-shadow(0 0 20px 0 #444);
 
 	img,
 	video {
@@ -558,15 +559,15 @@ input.button.edit {
  *=====================*/
 #projects {
 	.project-item {
-		overflow: hidden;
 		padding: 1.5em 0;
 		border-bottom: 1px dotted lighten($color_content, 50%);
+		@extend .clearfix;
 	}
 }
 
 #resume {
 	.resume-item {
-		overflow: hidden;
+		@extend .clearfix;
 		clear: both;
 		margin-bottom: 2em;
 	}
@@ -608,7 +609,7 @@ input.button.edit {
 			width: 43%;
 			float: right;
 			clear: right;
-			
+
 			a, em {
 				text-align: right;
 			}
