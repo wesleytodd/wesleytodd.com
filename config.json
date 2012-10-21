@@ -1,0 +1,17 @@
+{
+	"dirs" : {
+		"html"    : "/content/html/",
+		"images"  : "/content/images/"
+	},
+
+	"templates" : {
+		"default" : "/templates/default/",
+		"blank"   : "/templates/blank/",
+		"json"    : "/templates/json/"
+	},
+
+	"default-template" : "default",
+	"ajax-template"    : "json",
+
+	"pages" : "pages.json"
+}

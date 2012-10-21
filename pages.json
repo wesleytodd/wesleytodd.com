@@ -1,0 +1,33 @@
+[
+	{
+		"title"         : "John Wesley Todd",
+		"url"           : "/",
+		"content"       : "home.html",
+		"meta"          : {
+			"title"       : "John Wesley Todd - An Artist in Code, Clay and Pixels",
+			"description" : "John Wesley Todd - Artist & Web Developer - I make things out of code, pixels, clay and metal.  Making quality websites is something I take pride in."
+		}
+	},
+
+	{
+		"title"         : "HTML5 Login",
+		"url"           : "/html5-login",
+		"content"       : "html5-login/html5-login.html",
+		"short-content" : "html5-login/html5-login-short.html",
+		"meta"          : {
+			"title"       : "HTML5 Login - John Wesley Todd",
+			"description" : "An example of how to implement some HTML5 features when creating a login screen."
+		}
+	},
+
+	{
+		"title"         : "HTML5 Login Example",
+		"url"           : "/html5-login/example",
+		"content"       : "html5-login/html5-login-example.html",
+		"meta"          : {
+			"title"       : "HTML5 Login Example - John Wesley Todd",
+			"description" : "An example of how to implement some HTML5 features when creating a login screen."
+		},
+		"template"      : "blank"
+	}
+]
