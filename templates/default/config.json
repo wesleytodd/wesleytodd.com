@@ -1,6 +1,6 @@
 {
-	"name"          : "Clean & Blue",
-	"description"   : "Theme with full height sidebar, diagonal background stripes and blue coloring",
-	"template-type" : "mustache",
-	"index-file"    : "index.mustache"
+	"name"            : "Clean & Blue",
+	"description"     : "Theme with full height sidebar, diagonal background stripes and blue coloring",
+	"template-engine" : "mustache",
+	"file"            : "index.mustache"
 }

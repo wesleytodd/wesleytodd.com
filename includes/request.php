@@ -5,37 +5,47 @@ Class Request {
 	/**
 	 * Request URI
 	 */
-	protected $uri;
+	protected $_uri;
 
 	/**
 	 * Request POST
 	 */
-	protected $post;
+	protected $_post;
 
 	/**
 	 * Request GET
 	 */
-	protected $get;
+	protected $_get;
+
+	/**
+	 * Request Method
+	 */
+	protected $_method;
 
 	/**
 	 * Initialize Request
 	 */
 	public function __construct() {
-		$this->uri = $_SERVER['REQUEST_URI'];
-		$this->post = $_POST;
-		$this->get = $_GET;
+		$this->_uri = $_SERVER['REQUEST_URI'];
+		$this->_post = $_POST;
+		$this->_get = $_GET;
+		$this->_method = $_SERVER['REQUEST_METHOD'];
 	}
 
 	public function uri() {
-		return $this->uri;
+		return $this->_uri;
 	}
 
 	public function post() {
-		return $this->post;
+		return $this->_post;
 	}
 
 	public function get() {
-		return $this->get;
+		return $this->_get;
+	}
+
+	public function method() {
+		return $this->_method;
 	}
 
 	public function isAjax() {

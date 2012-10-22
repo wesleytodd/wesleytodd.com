@@ -1,3 +1,0 @@
-[submodule "includes/mustache"]
-	path = includes/mustache
-	url = git://github.com/bobthecow/mustache.php.git

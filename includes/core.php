@@ -19,12 +19,9 @@ Class Core {
 		$this->page = new Page($this->config, $this->request);
 
 		// Check if the page exists
-		if ($this->page->page_exists) {
+		if ($this->page->exists()) {
 
-			// Setup the template
-			$this->template = new Template($this->config, $this->request, $this->page);
-
-			//$output = $this->template->render();
+			$this->page->render();
 
 		} else {
 			// 404
