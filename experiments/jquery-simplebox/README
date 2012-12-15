@@ -1,0 +1,39 @@
+jQuery SimpleBox
+-----------------------
+
+This plugin is intended to meet the bare minimum for a lightbox functionality.
+This does not generate ui for the lightbox it only handles the events and
+positioning for the lightbox.  This supports multiple lightboxes on one page 
+as well as any type of html content in the lightbox.
+
+Full Example:
+
+$(function() {
+    $("#lightbox").jwtSimpleBox({
+        overlay_zindex      : '999998',                    //Manually set the z-index value of the overlay
+        lightbox_zindex     : '999999',                    //Manually set the x-index of the lightbox
+        overlay_background  : 'rgba(0,0,0,.6)',            //Applied as the css background property
+        show_event_type     : 'click',                     //Supplied to the function .live() as the first argument
+        show_event_target   : null,                        //A jQuery selector for the event handler
+        show_function       : 'show',                      //show, fadeIn or slideDown
+        show_duration       : 0,                           //Duration supplied to the amimation function selected above
+        show_easing         : 'swing',                     //Easing supplied to the animation function above
+        show_cb             : null,                        //A callback funciton that fires after the lightbox shows 
+        hide_event_type     : 'click touchstart',          //Supplied to the function .live() as the first argument
+        hide_event_target   : '#jwt_overlay, #jwt_close',  //A jQuery selector for the event handler
+        hide_function       : 'hide',                      //hide, fadeOut or slideUp
+        hide_duration       : 0,                           //Duration supplied to the amimation function selected above
+        hide_easing         : 'swing',                     //Easing supplied to the animation function above
+        hide_cb             : null,                        //A callback funciton that fires after the lightbox hides
+        use_fixed           : true,                        //Use fixed positioning if supported
+        show_now            : false,                       //Show lightbox as soon as it is setup
+        position_filter     : null                         //A function that filters the css rules applied to the lightbox
+    });
+});
+
+Versions
+-----------
+1.1    |    Fixed the positioning problem on the iPad when keyboard popus up for an input in the lightbox.
+       |    Added 'position_filter': a function to filter the css that is applied to the lightbox.
+
+1.0    |    Original version

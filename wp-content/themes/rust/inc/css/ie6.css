@@ -1,0 +1,37 @@
+header {
+	position: relative;
+	z-index: 2;
+}
+#content {
+	position: relative;
+	z-index: 1;
+}
+#content {
+	width: 858px !important;
+	float: left;
+}
+#sidebar {
+	float: right;
+	width: 238px !important;
+}
+article,
+#home-page-posts {
+	padding: 15px;
+	width: 770px;
+}
+#home-page-posts article {
+	width: 670px;
+}
+.submit input {
+	width: 84px !important;
+}
+.input-wrap span.wpcf7-not-valid-tip {
+	top: 0;
+}
+#comments {
+	width: 690px;
+	padding: 15px;
+}
+article pre {
+	width: 650px;
+}
