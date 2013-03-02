@@ -19,7 +19,7 @@
 define('DB_NAME', 'westodd');
 
 /** MySQL database username */
-define('DB_USER', 'wesleytodd_com');
+define('DB_USER', 'westodd');
 
 /** MySQL database password */
 define('DB_PASSWORD', 'Y6DYtfvzfj3DVJKA');
