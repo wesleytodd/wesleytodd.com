@@ -2,7 +2,7 @@
 	"types" : {
 		"page" : {
 			"directory" : "pages",
-			"suffix" : "md",
+			"suffix" : "html",
 			"permalinks" : "{{slug}}.html"
 		},
 		"post" : {

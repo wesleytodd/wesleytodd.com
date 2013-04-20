@@ -23,7 +23,7 @@
 				<h1 id="page-logo"><a href="/">Wesley Todd - Home</a></h1>
 				{{navList types.page.items}}
 
-				<h3>Articles</h3>
+				<h3>Articles</h2>
 				{{navList types.post.items 3}}
 			</nav>
 
@@ -41,7 +41,13 @@
 		</header>
 
 		<div id="page-content">
-			{{{content}}}
+			<header id="content-header">
+				<small class="date">{{meta.date.month}}.{{meta.date.day}}.{{meta.date.year}}</small>
+				<h1>{{meta.title}}</h1>
+			</header>
+			<section class="section">
+				{{{content}}}
+			</section>
 		</div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
