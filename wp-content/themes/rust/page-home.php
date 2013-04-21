@@ -6,6 +6,7 @@
 			<?php the_content(); ?>
 		</article>
 		
+		<?php /*
 		<section id="home-page-posts">
 			<h2>My Recent Articles</h2>
 			<?php
@@ -49,6 +50,7 @@
 			endif;
 			?>
 		</section>
+		*/ ?>
 	</div>
 	<?php get_sidebar(); ?>	
 </div>
