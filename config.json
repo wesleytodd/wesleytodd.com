@@ -2,13 +2,36 @@
 	"types" : {
 		"page" : {
 			"directory" : "pages",
-			"suffix" : "html",
-			"permalinks" : "{{slug}}.html"
+			"ext" : "html",
+			"permalinks" : "{{slug}}.html",
+			"filters" : {
+				"template" : {
+					"helpers" : "helpers.js"
+				}
+			}
 		},
 		"post" : {
 			"directory" : "posts",
-			"suffix" : "md",
-			"permalinks" : "{{date.year}}/{{date.month}}/{{slug}}.html"
+			"ext" : "md",
+			"permalinks" : "{{date.year}}/{{date.month}}/{{slug}}.html",
+			"filters" : {
+				"template" : {
+					"helpers" : "helpers.js"
+				},
+				"markdown" : {}
+			}
+		},
+		"media" : {
+			"directory" : "media",
+			"ext" : [
+				"jpg", "jpeg", "png", "gif", "svg"
+			],
+			"permalinks" : "media/{{slug}}.{{suffix}}",
+			"filters" : {
+				"imagemin" : {
+					
+				}
+			}
 		}
 	},
 	"themes" : {
@@ -16,7 +39,11 @@
 		"active" : "default"
 	},
 	"build" : {
-		"directory" : "build"
+		"directory" : "build",
+		"favicons" : [
+			"favicon.ico",
+			"apple-touch-icon.png"
+		]
 	},
 	"rufio" : {
 		"metaTokens" : {

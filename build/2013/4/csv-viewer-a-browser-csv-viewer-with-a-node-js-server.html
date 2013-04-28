@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>HTML5 + Node CSV Viewer</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="/css/global.css">
+        <script src="/js/vendor/modernizr.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+		<header id="navigation">
+			<a href="#navigation" class="open"></a>
+			<nav id="page-nav">
+				<h1 id="page-logo"><a href="/">Wesley Todd - Home</a></h1>
+				<ul><li><a href="/index.html">Home</a></li><li><a href="/resume.html">Resume</a></li></ul>
+
+				<h3>Articles</h2>
+				<ul><li><a href="/2013/4/csv-viewer-a-browser-csv-viewer-with-a-node-js-server.html">HTML5 + Node CSV Viewer</a></li><li><a href="/2013/4/drag-n-drop-in-raphael-js.html">Drag n' Drop In Raphael.js</a></li><li><a href="/2011/5/html5-login.html">HTML5 Login</a></li></ul>
+			</nav>
+
+			<div id="page-foot">
+				<div id="social-nav">
+					<ul>
+						<li class="social-icon github"><a href="https://github.com/wesleytodd">GitHub</a></li>
+						<li class="social-icon wordpress"><a href="http://profiles.wordpress.org/jawesomeclay">WordPress</a></li>
+						<li class="social-icon email"><a href="mailto:wes@wesleytodd.com">Email</a></li>
+						<li class="social-icon facebook"><a href="http://www.facebook.com/johnwesleytodd">Facebook</a></li>
+					</ul>
+				</div>
+				<span id="site-by" href="http://wesleytodd.com" title="Designed, Developed &amp; Written by Wes Todd">Designed, Developed &amp; Written by Wes Todd</span>
+			</div>
+		</header>
+
+		<div id="page-content">
+			<header id="content-header">
+				<small class="date">4.27.2013</small>
+				<h1>HTML5 + Node CSV Viewer</h1>
+			</header>
+			<section class="section">
+				<p>I was viewing some Excel spreadsheets the other day that had loads of content in each cell.  I was getting frustrated with the need to scroll back and forth to read these really longs lines of text.  So of course, as any good programmer would do, I wrote a program to help.  And I figured I would experiment with some of the new browser API&#39;s as well.  So this article will go over how to create a quick server with Node and then in the browser use the File API and Drag and Drop API to send the CSV&#39;s up.  </p>
+<p>The plan is to use <a href="http://www.senchalabs.org/connect/">Connect</a> to get our Node server up with minimal effort.  We are also going to use <code>browserver-router</code> for basic routing, and by routing, I mean one route for now.  Connect is a suite of middleware which has many of the basic needs for any webapp, and it can consume browserver-router, so that is a perfect fit for the basics.  Lastly, we will need a CSV parser.  For that I chose the most popular seeming parser, which has a nice event driven interface and seems well supported.</p>
+<p>To follow along, you can checkout my git repo with the complete code <a href="https://github.com/wesleytodd/csv-view">here</a>.</p>
+<p>The first thing we want to do is get all the node stuff working.  So let&#39;s setup a basic node project and install the dependencies:</p>
+<pre><code class="lang-bash">$ npm init
+... Answer the questions ...
+$ npm install --save connect browserver-router csv</code></pre>
+<p>If you are not familiar with npm, notice that we added the <code>--save</code> directive to the command.  This adds the correct lines to our <code>package.json</code> file so that the next time we setup the project, it will install the correct dependencies.  Now that we have those installed we need to setup our basic node server.  We will only need one file for this server, so we are going to just create an <code>index.js</code> file to get things setup in.  To start, we are going to require the dependencies we will need and create the app:</p>
+<pre><code class="lang-javascript">var http = require(&#39;http&#39;),
+    fs = require(&#39;fs&#39;),
+    csv = require(&#39;csv&#39;),
+    connect = require(&#39;connect&#39;),
+    Router = require(&#39;browserver-router&#39;);
+
+var app = connect();</code></pre>
+<p>To setup the connect server we just run the connect function.  This will now allow us to string together our middleware functions, most of which will come from connect itself.  The features we are going to use from connect are:</p>
+<ul>
+<li>(favicon)[<a href="http://www.senchalabs.org/connect/favicon.html">http://www.senchalabs.org/connect/favicon.html</a>]: Serves up a favicon.</li>
+<li>(static)[<a href="http://www.senchalabs.org/connect/static.html">http://www.senchalabs.org/connect/static.html</a>]: A static file server for our assets.</li>
+<li>(directory)[<a href="http://www.senchalabs.org/connect/directory.html">http://www.senchalabs.org/connect/directory.html</a>]: Used to serve up the index file.  The static server on it&#39;s own won&#39;t do that.</li>
+<li>(bodyParser)[<a href="http://www.senchalabs.org/connect/bodyParser.html">http://www.senchalabs.org/connect/bodyParser.html</a>]: This does the real magic.  It parses the upload data, which will be used to get the uploaded CSV file.</li>
+</ul>
+<p>To get those wired in we need the <code>use</code> function from our connect app.  For the <code>static</code> and <code>directory</code> middelware we need to pass in the path we want to serve up, <code>public</code>, the rest just need to be called.  Once we have all of the middelware, we just need to start the node server listening on a port.</p>
+<pre><code class="lang-javascript">var app = connect()
+    .use(connect.favicon())
+    .use(connect.static(&#39;public&#39;))
+    .use(connect.directory(&#39;public&#39;))
+    .use(connect.bodyParser())
+    .use(router);
+
+http.createServer(app).listen(1234);</code></pre>
+<p>In our public folder we are going to create an html template to load, which will include our css and javascript.  I am not going to go over the html and css, but suffice it to say that it is there and being loaded.  By placing our <code>static</code> and <code>directory</code> middleware before our router, we ensure that those will take precedence over our custom route handler which we have added to the end.  Get to the point already Wes, how does the router work, and how do we parse the CSV?  Well, here is the code dump:</p>
+<pre><code class="lang-javascript">// Create the router [1]
+var router = Router({
+    // We have only one route to match, upload [2]
+    &#39;/upload&#39; : function(req, res) {
+
+        // Setup some vars
+        var json = {},
+            first = true;
+
+        // Read the file from the upload [3]
+        fs.readFile(req.files[&#39;csv&#39;].path, function(err, content) {
+
+            // Create the scv parser [4]
+            csv()
+
+                // Define the CSV source [5]
+                .from(&#39;&#39; + content)
+
+                // Listen for a record event [6]
+                .on(&#39;record&#39;, function(row, index) {
+
+                    // If it is the first row, assume it is the headers [7]
+                    if (first) {
+                        json.headers = row;
+                        json.data = [];
+                        first = false;
+                    } else {
+                        // [8]
+                        json.data.push(row);
+                    }
+
+                // On end, return the data [9]
+                }).on(&#39;end&#39;, function() {
+
+                    // Make sure the server send the right headers [10]
+                    res.writeHead(200, {&#39;Content-Type&#39;: &#39;application/json&#39;});
+                    // Send the json data [11]
+                    res.end(JSON.stringify(json));
+
+                });
+
+        });
+    }
+});</code></pre>
+<p>Clearly this is where all the important stuff happens.  The first line <code>[1]</code> creates the router object, to which we pass our route configuration.  The route is defined as a string, but can be defined in may different ways (see <a href="https://github.com/jed/browserver-router">the docs</a>), and takes a callback function which is passed the request and response objects <code>[2]</code>.  The connect middleware creates a property on request object for the uploaded files.  These are saved to the tmp directory and the path is defined in the <code>path</code> property.  So we can use node&#39;s <code>readFile</code> to load up the file contents <code>[3]</code>.</p>
+<p>Now that we have the contents of the file, we can create the CSV parser <code>[4]</code> and pass the content into the parser <code>[5]</code>.  Note the <code>&#39;&#39; + content</code> part, this converts the buffer into a string.  I think there is a way to get the content as a stream and pass that straight to the parser, but I couldn&#39;t get that to work.  The CSV parser emits two events we need to hook into, <code>record</code> and <code>end</code>.  For each record that is delivered we want to push the data into the output json <code>[8]</code>.  But usually we are going to have headers, so for simplicity sake we are just going to assume that the first row is headers <code>[7]</code>, and send those back separately.</p>
+<p>Once we have received all of the row data from the CSV <code>[9]</code>, we want to send back the json object we built.  To let the browser know that we are returning json, and that the request was a success, we use the <code>writeHead</code> function with a <code>200</code> status and the json content type <code>[10]</code>.  Then we can send all of the json data by using the end method, which also closes the connection <code>[11]</code>.  And that is it on the node end, so let&#39;s start the node server:</p>
+<pre><code class="lang-bash">$ node index.js</code></pre>
+<p>Crack open Chrome, or whatever other inferior browser you use <em>wink wink</em>, and navigate to <code>http://localhost:1234</code>.  I didn&#39;t go over the html and css, but if you cloned the repository lineked to at the top, you should see this index.html from inside your public directory.  Let&#39;s get onto doing the browser side stuff.  What we want is a drag n&#39; drop interface for adding CSV files to the page, then a nice and simple display for that data.  Most of this front-end stuff comes from this MDN article, so if you want to read more, <a href="https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications#Selecting_files_using_drag_and_drop">check it out</a>.</p>
+<p>Open up the <code>main.js</code> file in the public directory and lets start hooking into the events we need to use:</p>
+<pre><code class="lang-javascript">// Attach listener for when a file is first dragged onto the screen [1]
+document.addEventListener(&#39;dragenter&#39;, function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    // Show an overlay so it is clear what the user needs to do [2]
+    document.body.classList.add(&#39;show-overlay&#39;);
+}, false);
+
+// Attach a listener for while the file is over the browser window [3]
+document.addEventListener(&#39;dragover&#39;, function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+}, false);
+
+// Attach a listener for when the file is actually dropped [4]
+document.addEventListener(&#39;drop&#39;, function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    // Hides the overlay [5]
+    document.body.classList.remove(&#39;show-overlay&#39;);
+
+    // Process the files [6]
+    handelFiles(e.dataTransfer.files);
+
+}, false);</code></pre>
+<p>We need to use the <code>dragenter</code> <code>[1]</code>, <code>dragover</code> <code>[3]</code> and <code>drop</code> <code>[4]</code> events.  We want to override the default functionality with <code>preventDefault</code> and <code>stopPropagation</code>, and then create our custom functionality.  First we want to give the user some feedback that that they can drop the files anywhere on the screen, so we add a class to the body which displays an overlay message <code>[2]</code>.  This message gets hidden when the user drops the files inside the <code>drop</code> method <code>[5]</code>.  Once the files are dropped on the browser window, we call the handelFiles function and pass it the files array <code>[6]</code>.  Here is that method:</p>
+<pre><code class="lang-javascript">// This function gets the file data and uploads it to the server
+function handelFiles(files) {
+
+    // Loop all the dropped files [1]
+    for (var i = 0, l = files.length; i &lt; l; i++) {
+
+        // Check that the files is a CSV [2]
+        if (files[i].type == &#39;text/csv&#39;) {
+
+            // Wrap it in a closure so that we maintain correct references to our xhr request [3]
+            (function(file) {
+
+                // Setup an xhr and a FormData object [4]
+                var xhr = new XMLHttpRequest(),
+                    fd = new FormData();
+
+                // Listen for the xhr to complete
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        // Parse the response and build the table [5]
+                        buildTable(file, JSON.parse(xhr.responseText));
+                    }
+                };
+
+                // Attach our file to the FormData object [6]
+                fd.append(&#39;csv&#39;, file);
+
+                // Open the connection to the server
+                xhr.open(&quot;POST&quot;, &quot;/upload&quot;, true);
+
+                // Send our FormData [7]
+                xhr.send(fd);
+
+            })(files[i]);
+
+        } else {
+            alert(&#39;Don\&#39;t give me that dirty file.  It\&#39;s not a CSV!!&#39;);
+        }
+
+    }
+
+}</code></pre>
+<p>This method loops through the files <code>[1]</code>, checking to make sure they are csv files <code>[2]</code>, then ajax&#39;s them to the server.  Notice that we wrap most of the code in a closure <code>[3]</code>, this is because the loop will override the <code>xhr</code> variable when more than one file is passed in.  Inside the closure we create an ajax request, and a <code>FormData</code> object <code>[4]</code> which we will use to send the file to the server. The <code>FormData</code> API is pretty new and only works in modern browsers, not even IE9.  We append the file to the <code>FormData</code> object <code>[6]</code> and send it over the ajax request <code>[7]</code>.  When we get a response back we then build out our display table <code>[5]</code>.  I am not going to go over the code to create the table, mainly because it is a mess, but if you want to check it out it is in the repository.  Now that everything is in place, you should be able to drag your CSV files over the browser and get a nicely formatted table for you to peruse your data.</p>
+<p>Hopefully this example of getting a basic app off the ground quickly and easily with Node shows how important of a tool Node is.  Node enables us to write simple applications that solve our problems without needing a complicated or monolithic back-end stack.  This ease is one of the reasons Node is on of the most important emerging tools in our toolbox as Front-End developers.  It is also one of the reasons I am so excited to see tools like Grunt and Yeoman take off.  The more we Front-End Dev&#39;s learn and utilize tools like this, the more we can focus on creating experiences for our users that are amazing.</p>
+
+			</section>
+		</div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/vendor/jquery/jquery.js"><\/script>')</script>
+        <script src="/js/global.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>
