@@ -14,18 +14,30 @@ module.exports = function(grunt) {
 		sass : {
 			build : {
 				options : {
-					style: 'expanded'
+					style: 'compressed'
 				},
-				files : {
-					'<%= rufio.build.directory %>/css/global.css' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/global.scss'
-				}
+				files : [
+					{
+						expand : true,
+						cwd : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/',
+						src : ['**/*.scss'],
+						dest : '<%= rufio.build.directory %>/css/',
+						ext : '.css'
+					}
+				]
 			}
 		},
 		uglify : {
 			build : {
-				files : {
-					'<%= rufio.build.directory %>/js/global.js' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/global.js'
-				}
+				files : [
+					{
+						expand : true,
+						cwd : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/',
+						src : ['*.js'],
+						dest : '<%= rufio.build.directory %>/js/',
+						ext : '.min.js'
+					}
+				]
 			}
 		},
 		bower : {
@@ -39,7 +51,6 @@ module.exports = function(grunt) {
 			}
 		}
 	});
-	
 
 	grunt.loadNpmTasks('generator-rufio');
 	grunt.loadNpmTasks('grunt-contrib-connect');

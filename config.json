@@ -1,55 +1,58 @@
 {
 	"types" : {
 		"page" : {
-			"directory" : "pages",
-			"ext" : "html",
-			"permalinks" : "{{slug}}.html",
-			"filters" : {
-				"template" : {
-					"helpers" : "helpers.js"
-				}
-			}
+			"directory" : "content/pages",
+			"permalinks" : "{{slug}}.html"
 		},
 		"post" : {
-			"directory" : "posts",
-			"ext" : "md",
-			"permalinks" : "{{date.year}}/{{date.month}}/{{slug}}.html",
+			"directory" : "content/posts",
+			"permalinks" : "{{meta.date.year}}/{{meta.date.month}}/{{slug}}.html",
 			"filters" : {
-				"template" : {
-					"helpers" : "helpers.js"
-				},
 				"markdown" : {}
 			}
 		},
 		"media" : {
-			"directory" : "media",
-			"ext" : [
-				"jpg", "jpeg", "png", "gif", "svg"
-			],
+			"directory" : "content/media",
 			"permalinks" : "media/{{slug}}.{{suffix}}",
 			"filters" : {
 				"imagemin" : {
-					
+					"files" : [
+						"**/*.jpg",
+						"**/*.jpeg",
+						"**/*.png
+					]
+				},
+				"svgmin" : {
+					"files" : [
+						"**/*.svg"
+					]
 				}
 			}
 		}
 	},
 	"themes" : {
 		"directory" : "themes",
-		"active" : "default"
-	},
-	"build" : {
-		"directory" : "build",
+		"active" : "default",
+		"extention" : "hb",
+		"filters" : {
+			"handelbars" : {
+				"preFilter" : [
+					"helpers.js"
+				]
+			}
+		},
 		"favicons" : [
 			"favicon.ico",
 			"apple-touch-icon.png"
 		]
 	},
+	"build" : {
+		"directory" : "build"
+	},
 	"rufio" : {
 		"metaTokens" : {
 			"start" : "----BEGIN META----",
 			"end" : "----END META----"
-		},
-		"templateExtention" : "hb"
+		}
 	}
 }
