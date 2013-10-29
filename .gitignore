@@ -1,5 +1,4 @@
-node_modules
-.DS_store
-themes/default/js/vendor
-sass.log
 .sass-cache
+node_modules
+npm_debug.log
+build

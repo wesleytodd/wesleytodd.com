@@ -1,0 +1,34 @@
+{
+	"title": "John Wesley Todd",
+	"hostname": "wesleytodd.com",
+	"tagline": "A javascript application developer",
+	"titleFormat": "<%= meta.title %> - <%= global.title %> - <%= global.tagline %>",
+	"types": {
+		"page": {
+			"directory": "pages",
+			"permalink": "/<%= slug %>.html",
+			"filters": "template"
+		},
+		"post" : {
+			"directory": "posts",
+			"permalink": "/<%= meta.date.getFullYear() %>/<%= meta.date.getMonth() + 1 %>/<%= slug %>.html",
+			"filters": "template,markdown"
+		}
+	},
+	"themes": {
+		"directory": "themes",
+		"active": "default"
+	},
+	"build": {
+		"directory": "build"
+	},
+	"media": {
+		"directory": "media"
+	},
+	"rufio": {
+		"metaEnd": "--META--"
+	},
+	"analytics": {
+		"code": "UA-XXXXXXXX-1"
+	}
+}
