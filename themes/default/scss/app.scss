@@ -22,8 +22,14 @@ textarea {
 }
 body {
 	margin: 0;
-	font-size: 1.1em;
-	line-height: 1.4;
+	font-size: .9em;
+	line-height: 1.2;
+
+	@media screen and (min-width: 720px) {
+		font-size: 1.1em;
+		line-height: 1.4;
+	}
+
 }
 * {
 	-webkit-box-sizing: border-box;
@@ -173,8 +179,8 @@ input.button {
 	padding: 1em 2em;
 	position: fixed;
 	z-index: 3;
-	width: 20em;
-	left: -19.5em;
+	width: 16em;
+	left: -15.5em;
 	top: 0;
 	bottom: 0;
 	background: darken($color_opposite, 2%);
@@ -188,6 +194,11 @@ input.button {
 
 	&:target {
 		left: 0;
+	}
+
+	@media screen and (min-width: 480px) {
+		width: 20em;
+		left: -19.5em;
 	}
 
 	.open {
@@ -243,16 +254,25 @@ input.button {
 	}
 }
 #page-nav {
-	height: 73%;
-	overflow: scroll;
+	height: 86%;
+	overflow: hidden;
+
+	.page-nav-inner {
+		height: 100%;
+		padding: 2em;
+		margin: -2em;
+		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
+		-ms-overflow-style: none;
+	}
 
 	h3 {
 		margin: 1em 0;
 		font-weight: normal;
-    border-bottom: 1px solid #eee;
-    -webkit-box-shadow: 0px 7px 12px -5px #eee;
-    -moz-box-shadow: 0px 7px 12px -5px #eee;
-    box-shadow: 0px 7px 12px -5px #eee;
+		border-bottom: 1px solid #eee;
+		-webkit-box-shadow: 0px 7px 12px -5px #eee;
+		-moz-box-shadow: 0px 7px 12px -5px #eee;
+		box-shadow: 0px 7px 12px -5px #eee;
 	}
 
 	li {

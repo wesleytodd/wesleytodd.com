@@ -1,0 +1,4 @@
+	 	<%= (global.ENVIRONMENT != 'dev') ? filters.include('partials/analytics.html', obj) : '' %>
+		<%= (global.ENVIRONMENT == 'dev') ? filters.include('partials/livereload.html', obj) : '' %>
+    </body>
+</html>
