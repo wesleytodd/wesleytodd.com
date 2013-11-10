@@ -11,13 +11,48 @@ Date: Mon Oct 28 2013 20:05:11 GMT-0500 (CDT)
 	<div class="section-content">
 		<div class="resume-item">
 			<div class="media">
+				<img src="/media/pages/resume/vube.jpg" alt="Vube" />
+			</div>
+			<div class="content">
+				<h3 class="resume-item-title">Principal Software Developer</h3>
+				<div class="resume-item-info">
+					<a href="http://vube.com">Vube</a>
+					<em>October 2013 to Present</em>
+				</div>
+				<ul class="resume-item-details">
+					<li>Leadership in technology strategy and architecture decisions</li>
+					<li>Evaluated performance, scalability and security of systems</li>
+					<li>Design and code reviews, mentoring other developers</li>
+					<li>All responsibilities of Seinor Software Developer</li>
+				</ul>
+				<h3 class="resume-item-title">Seinor Software Developer</h3>
+				<div class="resume-item-info">
+					<a href="http://vube.com">Vube</a>
+					<em>June 2013 to October 2013</em>
+				</div>
+				<ul class="resume-item-details">
+					<li>Helped build existing Vube.com site using Angular and Go</li>
+					<li>Architected and implemented Angular site serviceing 100,000 concurrent users</li>
+					<li>Worked with all facets of building a Single-Page Javascript application, including:
+						<ul>
+							<li>Unit and E2E Testing</li>
+							<li>Internationalization to 73 Languages</li>
+							<li>Grunt build process</li>
+							<li>Working with a Hal based REST API</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="resume-item">
+			<div class="media">
 				<img src="/media/pages/resume/white-lion.png" alt="White Lion" />
 			</div>
 			<div class="content">
 				<h3 class="resume-item-title">Lead Front-End Developer</h3>
 				<div class="resume-item-info">
 					<a href="http://wlion.com">White Lion</a>
-					<em>January 2013 to Present</em>
+					<em>January 2013 to June 2013</em>
 				</div>
 				<ul class="resume-item-details">
 					<li>Managing and organizing front-end team policy and process</li>

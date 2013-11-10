@@ -7,13 +7,22 @@ module.exports = function(grunt) {
 
 		// Asset manager
 		assets: {
-			js: {
+			jsDev: {
 				files: [{
 					cwd: '<%= rufio.build.directory %>',
 					src: [
 						'js/vendor/modernizr.js',
 						'js/vendor/jquery.js',
-						'js/{*.js,**/*.js}',
+						'js/{*.js,**/*.js}'
+					],
+					dest: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/partials/scripts.html'
+				}]
+			},
+			js: {
+				files: [{
+					cwd: '<%= rufio.build.directory %>',
+					src: [
+						'js/app.min.js'
 					],
 					dest: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/partials/scripts.html'
 				}]
@@ -173,6 +182,7 @@ module.exports = function(grunt) {
 			build: {
 				files: {
 					'<%= rufio.build.directory %>/js/app.min.js' : [
+						'<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/vendor/*.js',
 						'<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/{**/*.js,*.js}'
 					]
 				}
@@ -223,7 +233,7 @@ module.exports = function(grunt) {
 	// Register composte tasks
 	grunt.util._({
 		'default': ['build-dev', 'concurrent:watch'],
-		'build': ['clean:build', 'copy', 'uglify:build', 'sass:build', 'assets', 'rufio', 'htmlmin:build', 'imagemin:build', 'imagemin:build', 'copy:media'],
+		'build': ['clean:build', 'copy', 'uglify:build', 'sass:build', 'assets', 'rufio', 'htmlmin:build', 'svgmin:build', 'imagemin:build', 'imagemin:build', 'copy:media'],
 		'build-dev': ['clean:build', 'copy', 'sass:dev', 'assets', 'rufio-dev', 'prettify', 'imagemin:dev', 'svgmin:build', 'copy:media'],
 	}).map(function(task, name) {
 		grunt.registerTask(name, task);
