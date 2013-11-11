@@ -530,6 +530,11 @@ input.button {
 		}
 	}
 }
+.media-full {
+	@include media;
+	width: 100% !important;
+	max-width: none;
+}
 
 /* Containers */
 .container {
