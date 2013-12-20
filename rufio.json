@@ -25,6 +25,12 @@
 	"media": {
 		"directory": "media"
 	},
+	"plugins": {
+		"directory": "plugins",
+		"active": [
+			"rss"
+		]
+	},
 	"rufio": {
 		"metaEnd": "--META--"
 	},
