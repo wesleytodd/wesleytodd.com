@@ -4,31 +4,28 @@
 	"tagline": "A javascript application developer",
 	"titleFormat": "<%= meta.title %> - <%= global.title %> - <%= global.tagline %>",
 	"types": {
-		"page": {
-			"directory": "pages",
-			"permalink": "/<%= slug %>.html",
-			"filters": "template"
+		"pages": {
+			"directory": "content/pages",
+			"route": "/:slug.html",
+			"filters": ["meta:yaml", "template:ejs"]
 		},
-		"post" : {
-			"directory": "posts",
-			"permalink": "/<%= meta.date.getFullYear() %>/<%= meta.date.getMonth() + 1 %>/<%= slug %>.html",
-			"filters": "template,markdown"
+		"posts" : {
+			"directory": "content/posts",
+			"route": "/posts/:year/:month/:slug.html",
+			"filters": ["meta:yaml", "template:ejs", "markdown"],
+			"indexes": [{
+				"route": "/posts/:year",
+				"groupBy": "year"
+			}, {
+				"route": "/posts/:year/:month",
+				"groupBy": ["year", "month"]
+			}]
+		},
+		"media": {
+			"directory": "content/media",
+			"route": "/media/:filePathParts+",
+			"filters": ["meta:media"]
 		}
 	},
-	"themes": {
-		"directory": "themes",
-		"active": "default"
-	},
-	"build": {
-		"directory": "build"
-	},
-	"media": {
-		"directory": "media"
-	},
-	"rufio": {
-		"metaEnd": "--META--"
-	},
-	"analytics": {
-		"code": "UA-10973778-1"
-	}
+	"theme": "./themes/react"
 }

@@ -1,4 +1,4 @@
-Title: WP 3.1 Admin Bar: Removal, Styling and Frustration
+Title: "WP 3.1 Admin Bar: Removal, Styling and Frustration"
 Date: Thu Feb 24 2011 16:56:50 GMT-0500 (CDT)
 --META--
 
