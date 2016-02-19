@@ -2,21 +2,23 @@
 	"title": "John Wesley Todd",
 	"hostname": "wesleytodd.com",
 	"tagline": "A javascript application developer",
-	"titleFormat": "<%= meta.title %> - <%= global.title %> - <%= global.tagline %>",
+	"titleFormat": "{{title}} - {{site.title}} - {{site.tagline}}",
 	"types": {
 		"pages": {
 			"directory": "content/pages",
 			"route": "/:slug.html",
-			"filters": ["meta:yaml", "template:ejs"]
+			"filters": ["meta:yaml", "template:mustache"]
 		},
 		"posts" : {
 			"directory": "content/posts",
 			"route": "/posts/:year/:month/:slug.html",
 			"filters": ["meta:yaml", "template:ejs", "markdown"],
 			"indexes": [{
+				"title": "Articles for {{year}}",
 				"route": "/posts/:year",
 				"groupBy": "year"
 			}, {
+				"title": "Articles for {{month}} {{year}}",
 				"route": "/posts/:year/:month",
 				"groupBy": ["year", "month"]
 			}]

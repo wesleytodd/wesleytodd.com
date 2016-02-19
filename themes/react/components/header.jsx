@@ -22,7 +22,7 @@ module.exports = React.createClass({
 						<nav className="articles">
 							<ul>
 								{this.props.site.posts.map(function (p, i) {
-									if (i > 3) {
+									if (i > 5) {
 										return false;
 									}
 									return <li key={p.pathname}><a href={p.pathname}>{p.title}</a></li>
