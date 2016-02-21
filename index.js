@@ -1,31 +1,25 @@
-require('babel-register')();
+require('babel-register');
 var express = require('express');
 var runnable = require('runnable');
-var rufio = require('rufio');
 var rufioServer = require('rufio-server');
-var rufioConfig = require('./rufio.json');
-var ejs = require('ejs');
-var fs = require('fs');
-var path = require('path');
+var site = require('./site');
+var theme = require('./theme').default;
 
-var main = module.exports = runnable(function main (opts) {
+var main = module.exports = runnable(function main (opts, done) {
 	// Create app
 	var app = express();
 
-	var site = new rufio.Site(Object.assign({
-		baseDir: __dirname
-	}, rufioConfig));
-
 	// Load up rufio
-	app.use(rufioServer(site));
+	app.use(rufioServer(site, theme));
 
-	// Start server
-	var server = app.listen(opts.port, function () {
-		console.log('Listening on ' + server.address().port);
-	});
-
-	return server;
+	// Done setting up the app
+	done(null, app);
 }, [{
 	// Default options
 	port: 4000
+}, function (err, app) {
+	// Start server
+	var server = app.listen(4000, function () {
+		console.log('Listening on ' + server.address().port);
+	});
 }]);

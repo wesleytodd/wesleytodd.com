@@ -7,12 +7,14 @@
 		"pages": {
 			"directory": "content/pages",
 			"route": "/:slug.html",
-			"filters": ["meta:yaml", "template:mustache"]
+			"mime": "text/html",
+			"filters": ["yamlMeta", "mustache"]
 		},
 		"posts" : {
 			"directory": "content/posts",
 			"route": "/posts/:year/:month/:slug.html",
-			"filters": ["meta:yaml", "template:ejs", "markdown"],
+			"mime": "text/html",
+			"filters": ["yamlMeta", "markdown"],
 			"indexes": [{
 				"title": "Articles for {{year}}",
 				"route": "/posts/:year",
@@ -25,9 +27,25 @@
 		},
 		"media": {
 			"directory": "content/media",
-			"route": "/media/:filePathParts+",
-			"filters": ["meta:media"]
+			"route": "/media/:pathSegments*/:basename:ext",
+			"filters": ["mediaMeta"],
+			"excludePattern": ["!**/*.psd", "!**/_*"]
+		},
+		"images": {
+			"directory": "assets/images",
+			"route": "/assets/images/:pathSegments*/:basename:ext",
+			"filters": ["mediaMeta"]
+		},
+		"css": {
+			"directory": "assets/scss",
+			"route": "/assets/css/:pathSegments*/:basename:ext",
+			"filters": ["mediaMeta", "sass"],
+			"mime": "text/css"
+		},
+		"js": {
+			"directory": "assets/js",
+			"route": "/assets/js/:pathSegments*/:basename:ext",
+			"filters": ["mediaMeta", "browserify"]
 		}
-	},
-	"theme": "./themes/react"
+	}
 }
