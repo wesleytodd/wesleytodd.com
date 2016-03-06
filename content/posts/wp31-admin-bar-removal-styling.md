@@ -1,6 +1,6 @@
 Title: "WP 3.1 Admin Bar: Removal, Styling and Frustration"
 Date: Thu Feb 24 2011 16:56:50 GMT-0500 (CDT)
---META--
+---
 
 > UPDATE: I made a plugin that is really simple and handles all the stuff in this article and more: [WP Custom Admin Bar](http://wordpress.org/extend/plugins/wp-custom-admin-bar/)
 

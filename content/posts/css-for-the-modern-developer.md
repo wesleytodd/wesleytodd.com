@@ -1,7 +1,7 @@
 Title: CSS For The Modern Developer
 Date: Thu May 16 2013 22:55:46 GMT-0500 (CDT)
 Status: Draft
---META--
+---
 
 The web is evolving.  Things like the mobile web, web apps, CMS platforms and responsive design are each such large topics that is is almost impossible to keep up with them all.  If you are anything like me, there is only so much you can fit in your head at once.  So what can we do to keep up?  How can we relive our brains from having to keep it all in there at once?  I think that the answer lies in designing systems for organization and re-use.  Everything that we can do to make our day-to-day tasks simpler, will mean that we can push forward on the cool new things happening on the web.
 

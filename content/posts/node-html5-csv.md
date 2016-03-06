@@ -1,6 +1,6 @@
 Title: Node + HTML5 CSV Viewer
 Date: Sat Apr 27 2013 16:08:32 GMT-0500 (CDT)
---META--
+---
 
 I was viewing some Excel spreadsheets at work the other day that had loads of content in each cell, content so long it stretched off the screen on a 24" monitor.  I was getting super frustrated with the need to scroll back and forth so I could read these really longs lines, so what did I do?  Of course, as any good programmer would do, I wrote a program to help.  While I was at it, I figured it would be a good chance to experiment with some of the new browser API's I have not had a chance to use.  This article will go over what I came up with, creating a Node server and then using the File API and Drag and Drop API to ajax up the CSV's from the browser.  
 

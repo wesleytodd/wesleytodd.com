@@ -1,6 +1,6 @@
 Title: "YeoPress: A Yeoman Generator for WordPress"
 Date: Thu May 09 2013 23:03:28 GMT-0500 (CDT)
---META--
+---
 
 <div class="media-right large">![image](/media/posts/yeopress-a-yeoman-generator-for-wordpress/yeopress.jpg)</div>
 

@@ -3,7 +3,7 @@ GithubUser: wesleytodd
 GithubRepo: YeoPress
 NPMPackage: generator-wordpress
 ProjectLogo: /media/pages/index/yeopress.jpg
---META--
+---
 
 YeoPress is a <a href="http://yeoman.io" title="Modern Workflows For Modern Webapps">Yeoman</a> generator for <a href="http://wordpres.org" title="WordPress">WordPress</a>.  It is optimized for a workflow using Git, Sass and Require.js, but can be integrated into the simplest of workflows.  Adopting the ideals and tools of Yeoman, YeoPress integrates Yo to scaffold out your WP site, then provides a Grunt.js configuration and a base theme with Bower for asset management.
 
