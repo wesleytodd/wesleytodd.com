@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title><%= title %></title>
+		<meta name="description" content="<%= title %>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#259ddc" />
+		<link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+		<link rel="icon" type="image/png" href="/static/images/favicon.png" />
+		<% for (const f of files.css) {
+			%><link href="<%- f.href %>" rel="stylesheet" title="<%- f.title %>"/><%
+		} %>
+	</head>
+	<body>
+		<div id="app"></div>
+		<% for (const f of files.js) {
+			%><script src="<%- f.href %>" title="<%- f.title %>"></script><%
+		} %>
+	</body>
+</html>
