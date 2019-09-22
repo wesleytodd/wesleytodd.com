@@ -1,0 +1,8 @@
+#! /usr/bin/env node
+const express = require('express')
+const path = require('path')
+
+express()
+  .use(express.static('gh-pages'))
+  .use((req, res) => res.sendFile(path.resolve('gh-pages', '404.html')))
+  .listen('7000', () => console.log('Server listening on http://localhost:7000'))

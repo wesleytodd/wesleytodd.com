@@ -1,0 +1,94 @@
+#! /usr/bin/env node
+'use strict'
+const path = require('path')
+const buildjs = require('@wesleytodd/buildjs')
+const buildcss = require('@wesleytodd/buildcss')
+const fs = require('fs-extra')
+const cptmpl = require('cptmpl')
+
+const BASE_DIR = path.join(__dirname, '..')
+const TEMPLATE_DIR = path.join(BASE_DIR, 'template')
+const BUILD_DIR_NAME = 'gh-pages'
+const BUILD_DIR = path.join(BASE_DIR, BUILD_DIR_NAME)
+const BUILD_STATIC_DIR = path.join(BUILD_DIR, 'static')
+const JS = ['index']
+const CSS = [/* 'index',  */'normalize']
+const TEMPLATES = ['index', '404']
+
+;(async () => {
+  const jsFiles = await buildJs()
+  const cssFiles = await buildCss()
+  await buildHtml({
+    jsFiles,
+    cssFiles
+  })
+  await buildAssets()
+})()
+
+function buildJs () {
+  return Promise.all(JS.map(async (file) => {
+    const outPath = await buildjs({
+      BASE_DIR: BASE_DIR,
+      entries: [path.join(TEMPLATE_DIR, `${file}.js`)],
+      outputdir: path.join(BUILD_STATIC_DIR, 'js'),
+      outputFilename: `${file}-{{hash}}.js`,
+      outputMapFilename: `${file}-{{hash}}.js.map`,
+      outputMapUrl: '/' + path.relative(BUILD_DIR, path.join(BUILD_STATIC_DIR, 'js', `${file}-{{hash}}.js.map`)),
+      babelify: false,
+      // minify: true
+    })
+    return {
+      href: `/${path.relative(BUILD_DIR, outPath)}`,
+      title: file
+    }
+  }))
+}
+
+function buildCss () {
+  return Promise.all(CSS.map(async (file) => {
+    const outPath = await buildcss({
+      BASE_DIR: BASE_DIR,
+      srcfile: path.join(TEMPLATE_DIR, 'css', `${file}.css`),
+      outputdir: path.join(BUILD_STATIC_DIR, 'css'),
+      outputFilename: `${file}-{{hash}}.css`,
+      outputMapFilename: `${file}-{{hash}}.css.map`,
+      outputMapUrl: '/' + path.relative(BUILD_DIR, path.join(BUILD_STATIC_DIR, 'css', `${file}-{{hash}}.css.map`)),
+      minify: true
+    })
+    return {
+      href: `/${path.relative(BUILD_DIR, outPath)}`,
+      title: file
+    }
+  }))
+}
+
+function buildData (data) {
+  return Promise.all(Object.entries(data).map(async ([name, data]) => {
+    const outPath = path.join(BUILD_DIR, 'data', `${name}.json`)
+    await fs.outputJSON(outPath, data)
+    return `/${path.relative(BUILD_DIR, outPath)}`
+  }))
+}
+
+function buildHtml (opts) {
+  return Promise.all(TEMPLATES.map((file) => {
+    return cptmpl(
+      path.join(TEMPLATE_DIR, `${file}.html`),
+      path.join(BUILD_DIR, `${file}.html`),
+      {
+        title: 'Wesley Todd - A person on this planet who writes some JavaScript',
+        files: {
+          css: opts.cssFiles,
+          js: opts.jsFiles,
+        }
+      },
+      {
+        force: true
+      }
+    )
+  }))
+}
+
+function buildAssets (data) {
+  return fs.copy(path.join(TEMPLATE_DIR, 'assets'), BUILD_STATIC_DIR)
+}
