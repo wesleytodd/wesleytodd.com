@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>404 - Wesley Todd</title>
+		<script>
+			function __pathRedirect () {
+				const loc = window.location
+				window.location = `${loc.origin}/?__path=${encodeURIComponent(loc.pathname + loc.search + loc.hash)}`
+			}
+			__pathRedirect()
+    </script>
+	</head>
+	<body>
+		<noscript>
+			<h1>This website requires javascript. I didn't make the rules...</h1>
+			<p>Turn it on then <a onclick="__pathRedirect(); return false;" href="/">click here</a></p>
+		</noscript>
+	</body>
+</html>
