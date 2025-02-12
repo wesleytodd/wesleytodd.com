@@ -1,19 +1,50 @@
-name: Index and build site
 on:
   push:
-    branches:
-      - master
+    branches: [$default-branch]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Create GH Pages
-      uses: pkgjs/gh-pages@master
-      with:
-        nojekyll: true
-        repo: wesleytodd/wesleytodd.com
-        commit: "build: Pages build from ${{ github.sha }}"
-        build: npm i && npm run build
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-build-${{ github.sha }}
+          path: |
+            ~/.npm
+            ~/.cache
+            ./node_modules
+      - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+      - name: Build
+        run: npm run -w @wesleytodd/homepage build
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: 'homepage/_site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
